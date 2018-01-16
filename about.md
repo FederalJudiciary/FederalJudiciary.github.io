@@ -4,7 +4,8 @@ title: About
 permalink: /about/
 ---
 
-<p>I've followed the Supreme Court through the years.  I missed the Fortas imbroglio, but was old enough to remember Mr. Bork.  The recent history of judicial nominations remains interesting to study.  I realized I didn't know anything about the lower courts.  To help me, I prepared this series to look at the questions raised in the commentary on Twitter.  Are Trumps nominees unusually young?  How do comments about ABA ratings of Mr. Trumps appointees compare historicallys?  What circuits are populated by which presidents.  How does the appellate judiciary appear on a map.</p> <p>  Appointment tempo is another interesting topic.  You can see the rate of successful appointments for all presidents going back to Roosevelt.  This is shown both combined district and federal, and split out for each.</p>
+<p>I've followed the Supreme Court through the years.  I missed the Fortas imbroglio, but was old enough to remember Mr. Bork.  The recent history of judicial nominations remains interesting to study.  I realized I didn't know anything about the lower courts.  To help me, I prepared this series to look at the questions raised in the commentary on Twitter.  Are Trumps nominees unusually young?  How do comments about ABA ratings of Mr. Trumps appointees compare historicallys?  What circuits are populated by which presidents.  How does the appellate judiciary appear on a map.</p> 
+<p>  Appointment tempo is another interesting topic.  You can see the rate of successful appointments for all presidents going back to Roosevelt.  This is shown both combined district and federal, and split out for each.  That will be up next.</p>  <p>All R code for the scraping is available. Datasets are reproducible.  Although one group created in Tableau.</p>
 
  
 
