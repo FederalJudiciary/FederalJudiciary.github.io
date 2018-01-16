@@ -5,10 +5,10 @@ title: ABA Ratings
 ## ABA Ratings
 
 Data collected from ABA site:
-https://www.americanbar.org/groups/committees/federal_judiciary/ratings.html
+[ABA Ratings](https://www.americanbar.org/groups/committees/federal_judiciary/ratings.html)
 
-I used R to munge:
-http://FederalJudiciary.github.io/aba_ratings.R
+I used tabulizeR to munge (rJava required):
+[ABA_Ratings.r](http://FederalJudiciary.github.io/aba_ratings.R)
 
 <p>Much has been made of President Trump's nominations.  I wondered whether it was hyper or hypobole.  You can judge for yourself.</p>
 
