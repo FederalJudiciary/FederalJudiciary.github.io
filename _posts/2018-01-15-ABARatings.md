@@ -4,7 +4,13 @@ title: ABA Ratings
 ---
 ## ABA Ratings
 
-Data collected from ABA site.  I used R to munge.
+Data collected from ABA site:
+https://www.americanbar.org/groups/committees/federal_judiciary/ratings.html
+
+I used R to munge:
+http://FederalJudiciary.github.io/aba_ratings.R
+
+<p>Much has been made of President Trump's nominations.  I wondered whether it was hyper or hypobole.  You can judge for yourself.</p>
 
 <div class='tableauPlaceholder' id='viz1516058034412' style='position: relative'>
 <noscript>
