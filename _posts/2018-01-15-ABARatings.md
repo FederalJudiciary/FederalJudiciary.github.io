@@ -2,7 +2,6 @@
 layout: post
 title: ABA Ratings
 ---
-## ABA Ratings
 
 Data collected from ABA site:
 [ABA Ratings](https://www.americanbar.org/groups/committees/federal_judiciary/ratings.html)
