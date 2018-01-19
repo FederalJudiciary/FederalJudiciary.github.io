@@ -26,9 +26,8 @@ R code:
 [judges.R](FederalJudiciary.github.io/judges.R)
 
 Tableau:
-[Article III Judges](https://public.tableau.com/profile/mdcscry#!/vizhome/ArticleIIIJudges/Judges?publish=yes)
-
-<div class='tableauPlaceholder' id='viz1516346293166' style='position: relative'>
+[Article III Judges](https://public.tableau.com/views/ArticleIIIJudges/Judges?:embed=y&:display_count=yes&publish=yes)
+<div class='tableauPlaceholder' id='viz1516348351568' style='position: relative'>
 
 <noscript>
   
@@ -36,7 +35,7 @@ Tableau:
   
  <script type='text/javascript'>                    
   
- var divElement = document.getElementById('viz1516346293166');                    
+ var divElement = document.getElementById('viz1516348351568');                    
  var vizElement = divElement.getElementsByTagName('object')[0];                        vizElement.style.width='1000px';vizElement.style.height='1050px';                    
  var scriptElement = document.createElement('script');                    
  scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                
