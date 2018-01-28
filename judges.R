@@ -1,5 +1,3 @@
-
-
 library(rvest)
 library(XML)
 library(dplyr)
@@ -9,7 +7,6 @@ library(gender)
 library(stringr)
 library(janitor)
 library(lubridate)
-
 
 
 
@@ -188,6 +185,7 @@ senior_dates$yrsSenior <- (as.numeric(senior_dates$SeniorEndYear)-as.numeric(sen
 senior_dates$yrsSenior <- ifelse(!is.na(senior_dates$yrsSenior)==TRUE,senior_dates$yrsSenior,0)
 all <- cbind(all,senior_dates)
 
+colnames(all)
 
 all %>% 
   left_join(.,pres_start_lkup,by="Appointed.by")  %>%
