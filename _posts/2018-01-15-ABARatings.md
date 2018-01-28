@@ -11,7 +11,7 @@ I used tabulizeR to munge (rJava required):
 
 <p>Much has been made of President Trump's nominations.  I wondered whether it was hyper or hypobole.  You can judge for yourself.</p>
 
-<div class='tableauPlaceholder' id='viz1516058034412' style='position: relative'>
+<div class='tableauPlaceholder' id='viz1517121394336' style='position: relative'>
 <noscript>
   <a href='http:&#47;&#47;FederalJudiciary.github.io'><img alt='ABA Ratings 101-115 Congress ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;AB&#47;ABARatings101rstCongressthrough115thCongress&#47;ABARatings101-115Congress&#47;1_rss.png' style='border: none' /></a></noscript>
  <object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='ABARatings101rstCongressthrough115thCongress&#47;ABARatings101-115Congress' /><param name='tabs' value='no' /><param name='toolbar' value='yes' />
