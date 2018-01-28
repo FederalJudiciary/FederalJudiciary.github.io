@@ -7,8 +7,10 @@ Data collected from ABA site:
 [ABA Ratings](https://www.americanbar.org/groups/committees/federal_judiciary/ratings.html)
 
 I used tabulizeR to munge (rJava required):
-[ABA_Ratings.r](http://FederalJudiciary.github.io/aba_ratings.R)
-[aba_ratings912_addendum.R](http://FederalJudiciary.github.io/aba_ratings912_addendum.R)
+
+* [ABA_Ratings.r](http://FederalJudiciary.github.io/aba_ratings.R)
+* [aba_ratings912_addendum.R](http://FederalJudiciary.github.io/aba_ratings912_addendum.R)
+
 <p>Much has been made of President Trump's nominations.  I wondered whether it was hyper or hypobole.  You can judge for yourself.</p>
 
 <div class='tableauPlaceholder' id='viz1517121394336' style='position: relative'>
