@@ -1,4 +1,6 @@
 ---
+layout: post
+title: Apppointment Climbchart
 published: True
 ---
 ## A climbchart of presidential judicial appointments from Roosevelt to Present.
