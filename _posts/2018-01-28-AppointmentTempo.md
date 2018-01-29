@@ -3,7 +3,7 @@ layout: post
 title: Apppointment Climbchart
 published: True
 ---
-## A climbchart of presidential judicial appointments from Roosevelt to Present.
+## A climbchart of presidential judicial appointments from Roosevelt to Trump.
 
 Data collected from Wikipedia site:
 
