@@ -12,6 +12,7 @@ permalink: /about/
 ### More Information
 
 <p>I'm a jock(former)/artiscientist/gardner.  Degree in brain science and studies in performance art.  Varied computer projects through the years.
+ 
 [glyphmatic.us](www.glyphmatic.us) is one example from 2013-2014 using Unicode as "paint" </p>  
 
 ### Contact me
