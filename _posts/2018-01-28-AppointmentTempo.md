@@ -9,7 +9,7 @@ Data collected from Wikipedia site:
 
 * [Federal Courts Wikipedia Home](https://en.wikipedia.org/wiki/List_of_courts_of_the_United_States)
 
-* [district_appointments.r](http://FederalJudiciary.github.io/district_appointments.R)
+* [district_appointments.R](http://FederalJudiciary.github.io/district_appointments.R)
 * [appeals_appointments.R](http://FederalJudiciary.github.io/appeals_appointments.R)
 
 
