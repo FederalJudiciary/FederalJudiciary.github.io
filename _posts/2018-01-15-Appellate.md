@@ -25,6 +25,10 @@ https://en.wikipedia.org/wiki/United_States_District_Court_for_the_District_of_C
 R code: 
 [judges.R](FederalJudiciary.github.io/judges.R)
 
+Geocoding:
+
+*  [D. Kahle and H. Wickham. ggmap: Spatial Visualization with ggplot2. The R Journal, 5(1), 144-161](http://journal.r-project.org/archive/2013-1/kahle-wickham.pdf)
+
 Tableau:
 [Article III Judges](https://public.tableau.com/views/ArticleIIIJudges/Judges?:embed=y&:display_count=yes&publish=yes)
 <div class='tableauPlaceholder' id='viz1517206547440' style='position: relative'>
