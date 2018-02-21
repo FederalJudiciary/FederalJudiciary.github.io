@@ -45,6 +45,11 @@
     table1
     sort(unique(table1$ABA_Rating))
     congress112special_raw <- table1
+    
+    
+    
+    library(pivottabler)
+    qhpvt(bhmtrains, "TOC", "TrainCategory", "n()") 
 
 
 

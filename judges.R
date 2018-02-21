@@ -1,3 +1,8 @@
+##  This program generatees the Appeals Article III metadata  ----
+
+setwd("C:/cygwin64/home/659163/GitHub/FederalJudiciary.github.io")
+library(lubridate)
+library(ggmap) 
 library(rvest)
 library(XML)
 library(dplyr)
@@ -6,15 +11,15 @@ library(plyr)
 library(gender)
 library(stringr)
 library(janitor)
-library(lubridate)
+library(tidyr)
+library(dplyr)
+library(data.table)
+
+setwd("C:/cygwin64/home/659163/GitHub/FederalJudiciary.github.io")
 
 
+# Setup Links -------------------------------------------------------------
 
-pres_start_year <- c(0,0,1977,1977,1993,1993,1974,1974,1989,2001,1969,2009,1981,2017)
-
-Appointed.by <- sort(unique(all$Appointed.by))
-
-pres_start_lkup <- data.frame(cbind(pres_start_year,Appointed.by), stringsAsFactors = FALSE )
 
 courts <-c("First","Second","Third","Fourth","Fifth","Sixth","Seventh","Eighth","Ninth", "Tenth","Eleventh","Federal")
 
@@ -26,6 +31,8 @@ xpath_tbl <- c(2,2,2,2,2,2,2,2,3,2,2,2,2)
 xpath <- paste0("//*[@id=\"mw-content-text\"]/div/table[",xpath_tbl,"]")
 
 
+
+# Read Xpath --------------------------------------------------------------
 
 current_population <-''
 population <- data.frame()
@@ -44,84 +51,79 @@ str(circuit)
 i<-4
 
 
-###########  RETIRED JUDGES
+###########  Retired Judges  -------
 
-xpath_tbl_ret <- c(3,4,4,4,4,4,4,4,5,4,4,3,4)
-xpath_ret <- paste0("//*[@id=\"mw-content-text\"]/div/table[",xpath_tbl_ret,"]")
-circuit_ret1 <-''
-circuit_ret1 <-bind_rows(
-    wigga <-  lapply (c(1:13), function(i){
-        cat (i)
-        url <- links[i]
-        cat(url,"\n")
-        read_html(url) %>%
-          html_nodes(xpath=xpath_ret[i]) %>%
-          html_table(fill = TRUE) %>% as.data.frame() %>% mutate(circuit=paste0(courts[i]," Circuit"),"X."=as.character(.$X.)) %>%
-          filter(State != 'State') %>%
-          clean_names() %>%
-          rename(c('active_service'='active','chief_judge'='chief','senior_status'='senior','x'='Judge#')) 
-      })
-  )
-circuit_ret1$judge <- substr(circuit_ret1[,c("judge")],1,nchar(circuit_ret1[,c("judge")])/2+1)
+# xpath_tbl_ret <- c(3,4,4,4,4,4,4,4,5,4,4,3,4)
+# xpath_ret <- paste0("//*[@id=\"mw-content-text\"]/div/table[",xpath_tbl_ret,"]")
+# circuit_ret1 <-''
+# circuit_ret1 <-bind_rows(
+#     wigga <-  lapply (c(1:13), function(i){
+#         cat (i)
+#         url <- links[i]
+#         cat(url,"\n")
+#         read_html(url) %>%
+#           html_nodes(xpath=xpath_ret[i]) %>%
+#           html_table(fill = TRUE) %>% as.data.frame() %>% mutate(circuit=paste0(courts[i]," Circuit"),"X."=as.character(.$X.)) %>%
+#           filter(State != 'State') %>%
+#           clean_names() %>%
+#           rename(c('active_service'='active','chief_judge'='chief','senior_status'='senior','x'='Judge#')) 
+#       })
+#   )
+# circuit_ret1$judge <- substr(circuit_ret1[,c("judge")],1,nchar(circuit_ret1[,c("judge")])/2+1)
+# 
+# pos <- ifelse(regexpr('\\,', circuit_ret1$appointed_by)==-1,
+#               nchar(circuit_ret1$appointed_by),
+#               regexpr('\\,', circuit_ret1$appointed_by)-1)
+# 
+# circuit_ret1$appointed_by <- substr(circuit_ret1[,c("appointed_by")],1,pos)
+# head(circuit_ret1)
+# 
+# unique(circuit_ret1[,c("circuit","appointed_by")])
 
-pos <- ifelse(regexpr('\\,', circuit_ret1$appointed_by)==-1,
-              nchar(circuit_ret1$appointed_by),
-              regexpr('\\,', circuit_ret1$appointed_by)-1)
-
-circuit_ret1$appointed_by <- substr(circuit_ret1[,c("appointed_by")],1,pos)
-head(circuit_ret1)
-
-unique(circuit_ret1[,c("circuit","appointed_by")])
 
 
-
-#####Vacancies
+##### Vacancies -------
 #no vacancies on the Federal Court
 #
-xpath_tbl_vac <- c(3,3,3,3,3,3,3,3,4,3,3,0,3)
-xpath_vac <- paste0("//*[@id=\"mw-content-text\"]/div/table[",xpath_tbl_vac,"]")
-circuit_vac <-''
-i<-2
-circuit_vac1 <-bind_rows(
-  wigga <-  lapply (c(2,3,4,5,6,7,8,9,10,11,13), function(i){
-    cat (i)
-    url <- links[i]
-    cat(url,"\n")
-    read_html(url) %>%
-      html_nodes(xpath=xpath_vac[i]) %>%
-      html_table(fill = TRUE) %>% as.data.frame() %>% mutate(circuit=paste0(courts[i]," Circuit")) %>%
-      clean_names() 
-  })
-)
-circuit_vac1
-
-circuit_vac2 <-bind_rows(
-  wigga <-  lapply (c(3,4,5,6,11), function(i){
-    cat (i)
-    url <- links[i]
-    cat(url,"\n")
-    read_html(url) %>%
-      html_nodes(xpath=xpath_vac[i]) %>%
-      html_table(fill = TRUE) %>% as.data.frame() %>% mutate(circuit=paste0(courts[i]," Circuit"))
-  })
-)
-circuit_vac2
-
-names(circuit_vac1) <- tolower(names(circuit_vac1))
-names(circuit_vac2) <- tolower(names(circuit_vac2))
-
-vacancies_lkup <- rbind(circuit_vac2,circuit_vac1)
-
-
-
-######################
+# xpath_tbl_vac <- c(3,3,3,3,3,3,3,3,4,3,3,0,3)
+# xpath_vac <- paste0("//*[@id=\"mw-content-text\"]/div/table[",xpath_tbl_vac,"]")
+# circuit_vac <-''
+# i<-2
+# circuit_vac1 <-bind_rows(
+#   wigga <-  lapply (c(2,3,4,5,6,7,8,9,10,11,13), function(i){
+#     cat (i)
+#     url <- links[i]
+#     cat(url,"\n")
+#     read_html(url) %>%
+#       html_nodes(xpath=xpath_vac[i]) %>%
+#       html_table(fill = TRUE) %>% as.data.frame() %>% mutate(circuit=paste0(courts[i]," Circuit")) %>%
+#       clean_names() 
+#   })
+# )
+# circuit_vac1
+# 
+# circuit_vac2 <-bind_rows(
+#   wigga <-  lapply (c(3,4,5,6,11), function(i){
+#     cat (i)
+#     url <- links[i]
+#     cat(url,"\n")
+#     read_html(url) %>%
+#       html_nodes(xpath=xpath_vac[i]) %>%
+#       html_table(fill = TRUE) %>% as.data.frame() %>% mutate(circuit=paste0(courts[i]," Circuit"))
+#   })
+# )
+# circuit_vac2
+# 
+# names(circuit_vac1) <- tolower(names(circuit_vac1))
+# names(circuit_vac2) <- tolower(names(circuit_vac2))
+# 
+# vacancies_lkup <- rbind(circuit_vac2,circuit_vac1)
 
 
-
+# Begin Processing --------------------------------------------------------
 all <- circuit
 
-
-########   Determine Gender
+########   Determine Gender  -----
 stigga <-strsplit(all$Judge," ")
 gendertest <- lapply(1:length(stigga), function(i){
    ifelse(nchar(unlist(stigga[i])[[1]]) < 3,name <- unlist(stigga[i])[2],name <- unlist(stigga[i])[1])
@@ -149,11 +151,12 @@ all$gender[all$name %in% malenames] <- "male"
 all$gender[all$name %in% femalenames] <- "female"
 
 all[is.na(all$gender),]
-###########
-######  Get Length of Service in each position
+
+######  Get Length of Service in each position  ------
 
 present <- c("present","present[5]")
 
+# active ------------------------------------------------------------------
 active_dates <- data.frame(str_split_fixed(all$Active, "[[:punct:]]", 2),stringsAsFactors = FALSE)
 colnames(active_dates) <- c("ActiveStartYear","ActiveEndYear")
 active_dates$currActive [active_dates$ActiveEndYear %in% present ] <- "Y"
@@ -165,6 +168,7 @@ active_dates
 
 all <- cbind(all,active_dates)
 
+# chief ------------------------------------------------------------------
 
 chief_dates <- data.frame(str_split_fixed(all$Chief, "[[:punct:]]", 2),stringsAsFactors = FALSE)
 colnames(chief_dates) <- c("ChiefStartYear","ChiefEndYear")
@@ -175,6 +179,7 @@ chief_dates$yrsChief <- (as.numeric(chief_dates$ChiefEndYear)-as.numeric(chief_d
 chief_dates$yrsChief <- ifelse(!is.na(chief_dates$yrsChief)==TRUE,chief_dates$yrsChief,0)
 all <- cbind(all,chief_dates)
 
+# senior ------------------------------------------------------------------
 
 senior_dates <- data.frame(str_split_fixed(all$Senior, "[[:punct:]]", 2),stringsAsFactors = FALSE)
 colnames(senior_dates) <- c("SeniorStartYear","SeniorEndYear")
@@ -187,11 +192,21 @@ all <- cbind(all,senior_dates)
 
 colnames(all)
 
+
+# get year of presidency --------------------------------------------------
+pres_start_year <- c(0,1977,1977,1993,1993,1974,1974,1989,2001,1969,2009,1981,2017)
+Appointed.by <- sort(unique(all$Appointed.by))
+pres_start_lkup <- data.frame(cbind(pres_start_year,Appointed.by), stringsAsFactors = FALSE )
+
 all %>% 
   left_join(.,pres_start_lkup,by="Appointed.by")  %>%
   mutate(yrOfPresidency = as.numeric(.$ActiveStartYear)-as.numeric(.$pres_start_year)) -> all
 
-write.csv(all, file= "C:/Users/659163/Desktop/judges.csv" , row.names=FALSE)
+head(all)
+
+write.csv(all, file= "./judges.csv" , row.names=FALSE)
+judges <-read.csv("./judges.csv")
+colnames(judges)
 
 
 

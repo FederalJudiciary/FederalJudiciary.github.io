@@ -1,4 +1,35 @@
 
+my_sociomatrix <- matrix(round(runif(num_nodes*num_nodes)), # edge values
+                         nrow = num_nodes, #nrow must be same as ncol
+                         ncol = num_nodes)
+
+
+install.packages("sna") -----------
+install.packages("network")
+trace(utils:::unpackPkgZip, edit=TRUE)
+install.packages("GGally")
+library(GGally)
+devtools::install_github("briatte/ggnet")
+library(ggnet)
+library(network)
+library(sna)
+library(ggplot2)
+
+?read.paj
+
+bigga <- source("https://goo.gl/q1JFih")
+x = cut_number(as.integer(net %v% "year"), 4)
+col = c("#E1AF00", "#EBCC2A", "#78B7C5", "#3B9AB2")
+names(col) = levels(x)
+
+
+ggnet2(net, color = x, color.legend = "period", palette = col,
+       edge.alpha = 1/4, edge.size = "weight",
+       size = "outdegree", max_size = 4, size.cut = 3,
+       legend.size = 12, legend.position = "bottom") +
+  coord_equal()
+
+
 library(ggmap) 
 library(rvest)
 library(XML)
