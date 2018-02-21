@@ -1,0 +1,17 @@
+---
+layout: post
+title: District Courts
+published: True
+---
+## 4 Looks at U.S. District Courts of the United States
+
+Data collected from Wikipedia site:
+
+* [Distric Courts Wikipedia Home](https://en.wikipedia.org/wiki/List_of_courts_of_the_United_States#Courts_by_state_of_the_United_States)
+
+The R code is here, it is mostly reproducible, but every time new nominations are entered data anomolies may arise:
+** [district_appointments.R](http://FederalJudiciary.github.io/districtjudges.R)
+
+Geocoding provided by:
+
+** [D. Kahle and H. Wickham. ggmap: Spatial Visualization with ggplot2. The R Journal, 5(1), 144-161.] (http://journal.r-project.org/archive/2013-1/kahle-wickham.pdf)
