@@ -12,6 +12,8 @@ Data collected from Wikipedia site:
 * [district_appointments.R](http://FederalJudiciary.github.io/district_appointments.R)
 * [appeals_appointments.R](http://FederalJudiciary.github.io/appeals_appointments.R)
 
+* [see on TableauPublic](https://public.tableau.com/views/RateofAppointments/AppointmentClimb?:embed=y&:display_count=yes&publish=yes)
+
 
 <div class='tableauPlaceholder' id='viz1519376606724' style='position: relative'><noscript><a href='http:&#47;&#47;federaljudiciary.github.io'><img alt=' ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ra&#47;RateofAppointments&#47;AppointmentClimb&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> 
 <param name='embed_code_version' value='3' /> 
