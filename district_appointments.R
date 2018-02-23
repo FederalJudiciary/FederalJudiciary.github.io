@@ -39,7 +39,7 @@ links <-paste0("https://en.wikipedia.org/wiki/List_of_federal_judges_appointed_b
 
 ## Get Latest Current -------
 
-pres0 <- build_curveclimb(4,c(2))
+pres0 <- build_curveclimb(4,c(1:2))
   str(pres0)        
   names(pres0)
 # pres1 <- build_curveclimb(3,c(3:6))  
@@ -130,12 +130,16 @@ current_district_appointments <- pres_district[,c(15,1,3:5,9:14,16:17)]
 colnames(current_district_appointments)
 head(current_district_appointments)
 nrow(current_district_appointments)
-unique(current_district_appointments$appointed_by)
+unique(current_district_appointments$appointed_by,current_district_appointments$start_active_date)
 
+current_district_appointments %>% group_by(appointed_by,court_type,start_active_date) %>%
+  dplyr::summarise(n = n())
+# write current csv -----------------------------------------------------------
 
-# write rebuild -----------------------------------------------------------
+write.csv(current_district_appointments, file= "./current_district_appointments.csv" , row.names=FALSE)
+current_district_appointments_read <- read.csv("./current_district_appointments.csv", stringsAsFactors = FALSE)
+str(current_district_appointments_read)
 
-#write.csv(district_appointments, file= "./district_appointments.csv" , row.names=FALSE)
 
 
 # Read historical ---------------------------------------------------------
@@ -144,11 +148,18 @@ hst_district_appointments <- read.csv("./district_appointments.csv",stringsAsFac
 colnames(hst_district_appointments)
 # Read filter current from historical ---------------------------------------------------------
 hst_district_appointments <- hst_district_appointments[!hst_district_appointments$appointed_by=='Donald Trump',]
+hst_district_appointments <- hst_district_appointments[!hst_district_appointments$appointed_by=='Barack Obama',]
 unique(hst_district_appointments$appointed_by)
 
+str(current_district_appointments_read)
+str(hst_district_appointments)
+
 ###  Combine historical and current district appointments  -------------------
-final_district_appointments <- rbind(hst_district_appointments,current_district_appointments)
-unique(final_district_appointments$appointed_by)
+final_district_appointments <- rbind(hst_district_appointments,current_district_appointments_read)
+unique(final_district_appointments$start_active_date)
+final_district_appointments %>% dplyr::filter(appointed_by %like% 'Trump') %>%
+  group_by(appointed_by,court_type,start_active_date) %>%
+  dplyr::summarise(n = n())
 
 # Write current + historical ---------------------------------------------------------
 

@@ -30,11 +30,25 @@ links <-paste0("https://en.wikipedia.org/wiki/List_of_federal_judges_appointed_b
 
 
  ## New Tables
-pres_appeals0 <- build_curveclimb(3,c(2))
-  str(pres_appeals0)        
-  names(pres_appeals0)
+pres_appeals0 <- build_curveclimb(3,c(1:5,7:8,10:14))
+#pres_appeals0 <- build_curveclimb(3,c(1:5))
+  str(pres_appeals0)
+  table(pres_appeals0$circuit)
+  pres_appeals0$court_note_1 <- NULL
+  colnames(pres_appeals0)  
+  str(pres_appeals0)
+pres_appeals1 <- build_curveclimb(3,c(6,9))
+  names(pres_appeals1)  
+  pres_appeals1$confirmation_vote <- NA 
+  pres_appeals1 <- pres_appeals1[,c(1:5,11,6:10)]
+  names(pres_appeals1)  
+  str(pres_appeals1)
+  
+ 
+  
+   
 
-pres_appeals <- pres_appeals0            
+pres_appeals <- rbind(pres_appeals0,pres_appeals1)             
 head(pres_appeals)
 colnames(pres_appeals)
 
@@ -58,32 +72,58 @@ pres_appeals$judge <- substr(pres_appeals[,c("judge")],1,nchar(pres_appeals[,c("
 pres_appeals$confirmation_vote <- (sapply(strsplit(pres_appeals$confirmation_vote,"!"), `[`, 2))
 pres_appeals$court <- paste0(gsub(" Cir.","",(sapply(strsplit(pres_appeals$circuit,"!"), `[`, 2)))," Circuit")
 pres_appeals$Judgenum <- pres_appeals$'Judge#'
-#pres_appeals$Judgenum <- as.numeric(ifelse(is.na(sapply(strsplit(pres_appeals$Judgenum,"♠"), `[`, 2)),
-#                        pres_appeals$Judgenum,sapply(strsplit(pres_appeals$Judgenum,"♠"), `[`, 2)))
+pres_appeals$Judgenum <- as.numeric(ifelse(is.na(sapply(strsplit(pres_appeals$Judgenum,"♠"), `[`, 2)),
+                        pres_appeals$Judgenum,sapply(strsplit(pres_appeals$Judgenum,"♠"), `[`, 2)))
 pres_appeals$court_type <- "Appeals"
+pres_appeals$court_note_1 <- NULL
 pres_appeals$months_from_inauguration <- (interval(pres_appeals$pres_start_date,pres_appeals$start_active_date ) %/% months(1))
 str(pres_appeals$Judgenum)
   head(pres_appeals)
   colnames(pres_appeals)
   
 
-appeals_appointments <- pres_appeals[,c(17,2:6,10:16)]
+appeals_appointments <- pres_appeals[,c(16,2,4:6,10:15,17:18)]
 
 colnames(appeals_appointments)
   head(appeals_appointments)
   nrow(appeals_appointments)
   unique(pres_appeals$appointed_by)
+  
+write.csv(appeals_appointments, file= "./appeals_appointments_current.csv" , row.names=FALSE)  
+appeals_appointments_current_read <- read.csv("./appeals_appointments_current.csv",stringsAsFactors = FALSE)
+str(appeals_appointments_current_read)
 
-#write.csv(appeals_appointments, file= "./appeals_appointments.csv" , row.names=FALSE)
+
 historical <- read.csv("./appeals_appointments.csv",stringsAsFactors = FALSE)
 historical_no_current <- historical[!historical$appointed_by=='Donald Trump',]
 colnames(historical_no_current)
-combined_appeals_appointments <- rbind(appeals_appointments,historical_no_current)
+str(historical_no_current)
+
+combined_appeals_appointments <- rbind(appeals_appointments_current_read,historical_no_current)
+colnames(combined_appeals_appointments)
+unique(combined_appeals_appointments$start_active_date)
+write.csv(combined_appeals_appointments, file= "./appeals_appointments.csv" , row.names=FALSE)
+
 
 ### Write all appointments
-all_appointments0 <- rbind(appeals_appointments,district_appointments)
+all_appointments0 <- rbind(final_district_appointments,combined_appeals_appointments)
+str(final_district_appointments)
+final_district_appointments %>% dplyr::filter(appointed_by %like% 'Barack') %>%
+  group_by(appointed_by,court_type,start_active_date) %>%
+  dplyr::summarise(n = n())
+
+colnames(appeals_appointments)
+colnames(final_district_appointments)
+
+
+
 
 all_appointments1 <- arrange(all_appointments0 ,appointed_by,start_active_date)
+
+
+
+#all_appointments1 %>% dplyr::filter(appointed_by %like% 'Barack')  -> all_appointments1
+
 
 all_appointments1 <- ddply(all_appointments1,c("appointed_by","court_type"),transform,court_judges_count=seq(from=1,by=1,length.out=length(appointed_by)))
 all_appointments1 <- ddply(all_appointments1,c("appointed_by"),transform,all_judges_count=seq(from=1,by=1,length.out=length(appointed_by)))
@@ -96,11 +136,12 @@ tail(arrange(all_appointments1 ,appointed_by,start_active_date))
 
 all_appointments <- all_appointments1
 colnames(all_appointments)
+table(all_appointments$court_type,all_appointments$appointed_by)
 
-write.csv(all_appointments, file= "C:/Users/659163/Desktop/all_appointments.csv" , row.names=FALSE)
+write.csv(all_appointments, file= "./all_appointments.csv" , row.names=FALSE)
 historical_all_appst <- read.csv("./all_appointments.csv",stringsAsFactors = FALSE)
 colnames(historical_all_appst)
-
+# Functions ----
 build_curveclimb <- function (xpathtable,range) {
     curveclimb <-bind_rows(lapply (range, function(i){
     cat (i)
@@ -111,7 +152,7 @@ build_curveclimb <- function (xpathtable,range) {
       html_nodes(xpath=xpath) %>%
       html_table(fill = TRUE) %>% as.data.frame() %>% mutate(appointed_by = gsub("_"," ",presadentz[i]),
                                                              pres_start_date = as.Date(ISOdate(prez_start_year[i], 1, 1))) %>%
-      clean_names() %>%
+      clean_names() %>% mutate() %>%
       rename(c('active_service'='active','chief_judge'='chief','senior_status'='senior','x'='Judge#')) 
   }) 
   )
